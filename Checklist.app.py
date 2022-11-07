@@ -38,14 +38,12 @@ def armazena_perguntas(file_name_xlsx):
 def calcula_aderencia(dict_perguntas):
 
     lista_perguntas =[]
-    contagem = 0
     for key in dict_perguntas.keys():
         lista_perguntas.append(key)
 
-
     # define o tema da tela
     psg.theme('reddit')
-
+    contagem = 0
     layout = [
         [psg.Text(size=(70, 1))],
         [psg.Text(f"{lista_perguntas[contagem]}", size=(300, 2), font='Arial 12', justification='center', key='text',
@@ -53,7 +51,7 @@ def calcula_aderencia(dict_perguntas):
         [psg.Radio('SIM', 1, enable_events=True, key='R1'), psg.Radio('NÃO', 1, enable_events=True, key='R2')],
         [psg.Text(size=(70, 1))],
         [psg.Multiline(size=(100, 5),font='Arial 12', key='textbox', disabled=True, visible=False)],
-        [psg.Button('testar', border_width=2, size=(15, 1))],
+        [psg.Button('Enviar', border_width=2, size=(15, 1))],
 
     ]
     window = psg.Window('test', layout, size=(1000, 300), element_justification='c')
@@ -70,12 +68,8 @@ def calcula_aderencia(dict_perguntas):
         elif values['R2'] == True:
             window['textbox'].update(disabled=False)
             window['textbox'].update(visible=True)
-        if event == 'testar':
 
-            try:
-                window['text'].update(lista_perguntas[contagem])
-            except:
-                break
+        if event == 'Enviar':
             if values['R2'] == True:
                 f.write(f"ID: {dict_perguntas[lista_perguntas[contagem]]['id']}\n")
                 f.write(f"DESCRICAO: {lista_perguntas[contagem]}\n")
@@ -83,16 +77,18 @@ def calcula_aderencia(dict_perguntas):
                 f.write(f"PRIORIDADE: {dict_perguntas[lista_perguntas[contagem]]['prioridade']}\n")
                 f.write(f"JUSTIFICATIVA NFC: {values['textbox']}\n")
 
-
             window['textbox'].update("")
             window['textbox'].update(disabled=True)
             window['textbox'].update(visible=False)
             window['R1'].update(False)
             window['R2'].update(False)
-            contagem+=1
 
+            contagem += 1
+            try:
+                window['text'].update(lista_perguntas[contagem])
+            except:
+                break
 
-    print('rs')
 def main():
     # selecionando arquivos
     print('Selecione a planilha')
