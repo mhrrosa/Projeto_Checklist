@@ -30,7 +30,8 @@ def armazena_perguntas(file_name_xlsx):
 
 
 def calcula_aderencia(dict_perguntas):
-
+    quantidade_aprovados = 0
+    quantidade_total = 0
     lista_perguntas =[]
     for key in dict_perguntas.keys():
         lista_perguntas.append(key)
@@ -70,6 +71,11 @@ def calcula_aderencia(dict_perguntas):
                 f.write(f"RESPONSAVEL: {dict_perguntas[lista_perguntas[contagem]]['responsavel']}\n")
                 f.write(f"PRIORIDADE: {dict_perguntas[lista_perguntas[contagem]]['prioridade']}\n")
                 f.write(f"JUSTIFICATIVA NFC: {values['textbox']}\n")
+                f.write(f'-----------------\n')
+
+            else:
+                quantidade_aprovados +=1
+            quantidade_total +=1
                 
 
             window['textbox'].update("")
@@ -82,7 +88,14 @@ def calcula_aderencia(dict_perguntas):
             try:
                 window['text'].update(lista_perguntas[contagem])
             except:
+                f.write(f'-----------------\n')
+                f.write(f'\n')
+                f.write(f'- Quantidade aprovados: {quantidade_aprovados}\n')
+                f.write(f'- Quantidade total: {quantidade_total}\n')
+                f.write(f'-  Taxa de aderencia: {quantidade_total/quantidade_aprovados}%  - \n')
                 break
+
+
 
 def main():
     # selecionando arquivos
