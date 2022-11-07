@@ -93,6 +93,7 @@ def calcula_aderencia(dict_perguntas):
 
 
     print('rs')
+
 def main():
     # selecionando arquivos
     print('Selecione a planilha')
