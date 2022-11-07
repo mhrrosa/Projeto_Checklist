@@ -105,6 +105,7 @@ def calcula_aderencia(dict_perguntas):
                 f.write(f'--- Estatísticas ---\n')
                 f.write(f'\n')
                 f.write(f'- Quantidade aprovados: {quantidade_aprovados}\n')
+                f.write(f'- Quantidade NFC: {quantidade_total - quantidade_aprovados}\n')
                 f.write(f'- Quantidade total: {quantidade_total}\n')
                 f.write(f'- Taxa de aderencia: {quantidade_aprovados/quantidade_total *100}%  - \n')
                 break
