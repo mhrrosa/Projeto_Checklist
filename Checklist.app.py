@@ -48,7 +48,7 @@ def calcula_aderencia(dict_perguntas):
         [psg.Text(size=(70, 1))],
         [psg.Text(f"{lista_perguntas[contagem]}", size=(300, 2), font='Arial 12', justification='center', key='text',
                   text_color='black')],
-        [psg.Radio('SIM', 1, enable_events=True, key='R1'), psg.Radio('NÃO', 1, enable_events=True, key='R2')],
+        [psg.Radio('SIM', 1, enable_events=True, key='R1'), psg.Radio('NÃO', 1, enable_events=True, key='R2'),psg.Radio('NÃO SE APLICA', 1, enable_events=True, key='R3')],
         [psg.Text(size=(70, 1))],
         [psg.Multiline(size=(100, 5),font='Arial 12', key='textbox', disabled=True, visible=False)],
         [psg.Button('Enviar', border_width=2, size=(15, 1))],
@@ -65,12 +65,12 @@ def calcula_aderencia(dict_perguntas):
         elif values['R1'] == True:
             window['textbox'].update(disabled=True)
             window['textbox'].update(visible=False)
-        elif values['R2'] == True:
+        elif values['R2'] == True  or values['R3'] == True:
             window['textbox'].update(disabled=False)
             window['textbox'].update(visible=True)
 
         if event == 'Enviar':
-            if values['R2'] == True:
+            if values['R2'] == True or values['R3'] == True:
                 f.write(f"ID: {dict_perguntas[lista_perguntas[contagem]]['id']}\n")
                 f.write(f"DESCRICAO: {lista_perguntas[contagem]}\n")
                 f.write(f"RESPONSAVEL: {dict_perguntas[lista_perguntas[contagem]]['responsavel']}\n")
