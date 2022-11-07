@@ -1,0 +1,6 @@
+-- Arquivo de NFC --
+ID: 1
+DESCRICAO: Os produtos de trabalho contém atividades, recursos e responsabilidades do projeto?
+RESPONSAVEL: Matheus
+PRIORIDADE: Baixa - Simples | 2 dias
+JUSTIFICATIVA NFC: produt
