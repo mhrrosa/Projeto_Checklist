@@ -93,6 +93,7 @@ def calcula_aderencia(dict_perguntas):
                 window['text'].update(lista_perguntas[contagem])
             except:
                 f.write(f'\n')
+                f.write(f'\n')
                 f.write(f'--- Estatísticas ---\n')
                 f.write(f'\n')
                 f.write(f'- Quantidade aprovados: {quantidade_aprovados}\n')
