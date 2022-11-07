@@ -94,6 +94,7 @@ def calcula_aderencia(dict_perguntas):
             window['textbox'].update(visible=False)
             window['R1'].update(False)
             window['R2'].update(False)
+            window['R3'].update(False)
 
             contagem += 1
             try:
