@@ -3,9 +3,7 @@ from tkinter import Tk
 from tkinter.filedialog import askopenfilename
 import pandas
 import PySimpleGUI as psg
-import smtplib
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
+import xlsxwriter
 
 
 def armazena_perguntas(file_name_xlsx):
@@ -25,7 +23,7 @@ def armazena_perguntas(file_name_xlsx):
         #armazenando no dict
         dict_perguntas[descricao] = {
             "id": id,
-            "responsavel": responsavel,
+            "responsável": responsavel,
             "prioridade": prioridade_peso
         }
     return dict_perguntas
@@ -71,8 +69,8 @@ def calcula_aderencia(dict_perguntas):
         if event == 'Enviar':
             if values['R2'] == True or values['R3'] == True:
                 f.write(f"ID: {dict_perguntas[lista_perguntas[contagem]]['id']}\n")
-                f.write(f"DESCRICAO: {lista_perguntas[contagem]}\n")
-                f.write(f"RESPONSAVEL: {dict_perguntas[lista_perguntas[contagem]]['responsavel']}\n")
+                f.write(f"DESCRIÇÃO: {lista_perguntas[contagem]}\n")
+                f.write(f"RESPONSÁVEL: {dict_perguntas[lista_perguntas[contagem]]['responsável']}\n")
                 f.write(f"PRIORIDADE: {dict_perguntas[lista_perguntas[contagem]]['prioridade']}\n")
             if values['R2'] == True:
                 f.write(f"RESULTADO: Não atende\n")
@@ -102,22 +100,47 @@ def calcula_aderencia(dict_perguntas):
             except:
                 f.write(f'\n')
                 f.write(f'\n')
-                f.write(f'--- Estatísticas ---\n')
+                f.write(f'=== Estatísticas ===\n')
                 f.write(f'\n')
                 f.write(f'- Quantidade aprovados: {quantidade_aprovados}\n')
                 f.write(f'- Quantidade NFC: {quantidade_total - quantidade_aprovados}\n')
                 f.write(f'- Quantidade total: {quantidade_total}\n')
-                f.write(f'- Taxa de aderencia: {quantidade_aprovados/quantidade_total *100}%  - \n')
+                f.write(f'- Taxa de aderência: {quantidade_aprovados/quantidade_total *100}%  - \n')
                 break
 
+def gerando_excel(dict_perguntas):
+
+    dict_relatorio = {}
+
+    for dados in dict_perguntas.keys():
+        # declarando variaveis e armazenando seus valores
+        id = dados[1]['ID']
+        descricao = dados[1]['DESCRICAO']
+        responsavel = dados[1]['RESPONSAVEL']
+        prioridade_peso = dados[1]['PRIORIDADE']
+        resultado = dados[1]['RESULTADO']
+        justificativa = dados[1]['JUSTIFICATIVA']
+
+        # armazenando no dict
+        dict_relatorio[descricao] = {
+            "id": id,
+            "responsável": responsavel,
+            "prioridade": prioridade_peso,
+            "resultado": resultado,
+            "justificativa": justificativa
+        }
+    df = pandas.DataFrame(dict_relatorio)
+    df.to_excel('Arquivo_NFC')
+
 def main():
-    # selecionando arquivos
+    # selecionando arquivo
     print('Selecione a planilha')
     Tk().withdraw()
     file_name_xlsx = askopenfilename(filetypes=[('xlsx', '.xlsx')])
 
     dict_perguntas = armazena_perguntas(file_name_xlsx)
     calcula_aderencia(dict_perguntas)
+    gerando_excel(dict_perguntas)
 
 if __name__ == '__main__':
     f = open(f"Arquivo_NFC.txt", "w+", encoding='utf8')
@@ -129,3 +152,7 @@ if __name__ == '__main__':
 
     main()
     f.close()
+
+
+
+
