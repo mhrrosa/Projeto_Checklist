@@ -22,7 +22,7 @@ def envia_email(taxa_aderencia):
 
         body = F"\nOlá, espero que esteja bem! \n" \
                F"Estou enviando este e-mail, notificando sobre os itens de não conformidade \n " \
-               F"A taxa de adêrencia do seu projeto esta em: {round(taxa_aderencia,2)}\n" \
+               F"A taxa de adêrencia do seu projeto esta em: {round(taxa_aderencia,2)}%\n" \
                F"Segue o arquivo com detalhes das não conformidades encontradas em anexo:"
 
         msg.attach(MIMEText(body, 'plain'))
@@ -114,6 +114,7 @@ def calcula_aderencia(dict_perguntas):
             window['textbox'].update(visible=True)
 
         if event == 'Enviar':
+
             if values['R2'] == True:
                 dict_relatorio_final[contagem] = {
                     "ID": dict_perguntas[lista_perguntas[contagem]]['id'],
@@ -149,6 +150,7 @@ def calcula_aderencia(dict_perguntas):
             window['R2'].update(False)
             window['R3'].update(False)
 
+
             contagem += 1
             try:
                 window['text'].update(lista_perguntas[contagem])
@@ -162,7 +164,7 @@ def calcula_aderencia(dict_perguntas):
                 f.write(f'- Quantidade total: {quantidade_total}\n')
                 f.write(f'- Taxa de aderencia: {quantidade_aprovados / quantidade_total * 100}%  - \n')
                 break
-            contagem +=1
+            print(contagem)
 
     new_df = pandas.DataFrame(data=dict_relatorio_final)
     new_df = (new_df.T)
